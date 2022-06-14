@@ -25,6 +25,8 @@ sim = Simulation(
 run_simulation!(sim, T=20, plot_each_timestep = true)
 ```
 
+![](example.png)
+
 To run a stimulation where sampling times are optimized, use:
 ```julia
 A1 = 0.2
