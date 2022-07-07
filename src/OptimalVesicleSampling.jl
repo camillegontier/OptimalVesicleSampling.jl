@@ -1,6 +1,6 @@
 module OptimalVesicleSampling
 
-using Distributions: Exponential, Normal
+using Distributions: Exponential, Normal, truncated
 using LaTeXStrings
 using Plots
 using LinearAlgebra: det
