@@ -14,6 +14,9 @@ export GroundTruthModel, GridModel, Observation, ScalarGroundTruthModel
 include("timestep.jl")
 export Timestep, RandomTimestep
 
+include("record.jl")
+export Recording
+
 include("simulate.jl")
 export Simulation, run_simulation!
 

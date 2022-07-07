@@ -18,11 +18,10 @@ function (policy::MyopicPolicy)(sim::Simulation)
     idx = rand(1:m_out,M)
     A1_temp = sim.simmodel.state.A1ind[idx]
     τ1_temp = sim.simmodel.state.τ1ind[idx]
-    A2_temp = sim.simmodel.state.A2ind[idx]
     τ2_temp = sim.simmodel.state.τ2ind[idx]
     results = zeros(length(dts))
     @showprogress for (i, dt) in enumerate(dts)
-        e_temp = A1_temp.*(1 .- exp.(-dt./τ1_temp)) + A2_temp.*(1 .- exp.(-dt./τ2_temp))
+        e_temp = A1_temp.*(1 .- exp.(-dt./τ1_temp)) + (1 .- A1_temp).*(1 .- exp.(-dt./τ2_temp))
         for e in e_temp
             obs = Observation(e,dt)
             temp_simmodel = _temp_simmodel(sim, policy)
@@ -40,11 +39,10 @@ function (policy::MyopicPolicy)(sim::Experiment)
     idx = rand(1:m_out,M)
     A1_temp = sim.simmodel.state.A1ind[idx]
     τ1_temp = sim.simmodel.state.τ1ind[idx]
-    A2_temp = sim.simmodel.state.A2ind[idx]
     τ2_temp = sim.simmodel.state.τ2ind[idx]
     results = zeros(length(dts))
     @showprogress for (i, dt) in enumerate(dts)
-        e_temp = A1_temp.*(1 .- exp.(-dt./τ1_temp)) + A2_temp.*(1 .- exp.(-dt./τ2_temp))
+        e_temp = A1_temp.*(1 .- exp.(-dt./τ1_temp)) + (1 .- A1_temp).*(1 .- exp.(-dt./τ2_temp))
         for e in e_temp
             obs = Observation(e,dt)
             temp_simmodel = _temp_simmodel(sim, policy)
@@ -59,16 +57,15 @@ end
 function _entropy(temp_state::GridModel)
     A1ind = Array(temp_state.A1ind)
     τ1ind = Array(temp_state.τ1ind)
-    A2ind = Array(temp_state.A2ind)
     τ2ind = Array(temp_state.τ2ind)
 
     A1max = temp_state.A1rng[end]
     τ1max = temp_state.τ1rng[end]
-    A2max = temp_state.A2rng[end]
     τ2max = temp_state.τ2rng[end]
 
-    samples = [A1ind'./A1max ; τ1ind'./τ1max ; A2ind'./A2max ; τ2ind'./τ2max]
-    method = LinearShrinkage(DiagonalUnequalVariance(), 0.5)
-    Σ_est = cov(method, samples')
+    samples = [A1ind'./A1max ; τ1ind'./τ1max ; τ2ind'./τ2max]
+    #method = LinearShrinkage(DiagonalUnequalVariance(), 0.5)
+    #Σ_est = cov(method, samples')
+    Σ_est = cov(samples')
     return log(det(2*pi*ℯ*Σ_est))
 end

@@ -1,5 +1,5 @@
-struct ParticleFilter
-    jittering_width::Float32
+struct ParticleFilter{T1}
+    jittering_width::T1
 end
 
 struct ParticleState{T1}
@@ -8,11 +8,11 @@ end
 
 function ParticleState(
     m_out::Integer,
-    A1rng, τ1rng, A2rng, τ2rng;
+    A1rng, τ1rng, τ2rng;
     device::Symbol = :gpu
 )
     state = GridModel(
-        m_out, A1rng, τ1rng, A2rng, τ2rng,
+        m_out, A1rng, τ1rng, τ2rng,
         device = device
     )
     return ParticleState(state)

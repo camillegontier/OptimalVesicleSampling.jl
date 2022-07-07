@@ -87,7 +87,6 @@ end
 function resample_indices!(state::GridModel, idx)
     resample_indices!(state.A1ind, idx)
     resample_indices!(state.τ1ind, idx)
-    resample_indices!(state.A2ind, idx)
     resample_indices!(state.τ2ind, idx)
     return state
 end

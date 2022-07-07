@@ -12,17 +12,17 @@ function filter_update!(sim::Simulation, obs)
 end
 
 function Simulation(
-    A1, τ1, A2, τ2, σ,
-    A1rng, τ1rng, A2rng, τ2rng,
+    A1, τ1, τ2, σ,
+    A1rng, τ1rng, τ2rng,
     m_out, width;
     timestep::Timestep = RandomTimestep(Exponential(0.121)),
     device::Symbol = :gpu
 )
-    gtmodel = ScalarGroundTruthModel(A1, τ1, A2, τ2, σ)
+    gtmodel = ScalarGroundTruthModel(A1, τ1, τ2, σ)
     filter = ParticleFilter(width)
     simmodel = ParticleState(
                 m_out,
-                A1rng, τ1rng, A2rng, τ2rng,
+                A1rng, τ1rng, τ2rng,
                 device = device
              )
     times = zeros(0)
