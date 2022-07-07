@@ -48,12 +48,21 @@ end
 function run_simulation!(
     sim::Simulation;
     T::Integer,
-    plot_each_timestep::Bool = false
+    plot_each_timestep::Bool = false,
+    recording::Recording = NoRecording
 )
     for i in 1:T
         propagate!(sim)
         if plot_each_timestep
             plot_results(sim)
         end
+        update!(recording, sim)
     end
+    save(recording)
+end
+
+function Recording(f1, f2, sim::Simulation)
+    res = f1(sim)
+    data = [res]
+    return Recording(f1, f2, data)
 end
