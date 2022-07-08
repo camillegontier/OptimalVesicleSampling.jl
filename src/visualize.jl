@@ -38,7 +38,7 @@ function plot_results(sim::Simulation)
 
 
     σ = sim.gtmodel.σ
-    t = LinRange(0, 4, 100)
+    t = LinRange(0, 6, 100)
     y = A1.*(1 .- exp.(-t./τ1)) + (1 .- A1).*(1 .- exp.(-t./τ2))
     d = plot(t,y,xlabel = "Time [s]",label="Ground truth",legend=:bottomright,
     linewidth = 3, color = "orange")
