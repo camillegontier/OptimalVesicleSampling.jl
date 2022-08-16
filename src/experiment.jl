@@ -14,7 +14,7 @@ end
 function Experiment(
     σ,
     A1rng, τ1rng, τ2rng,
-    m_out, width,
+    m_out, width;
     timestep::Timestep = RandomTimestep(Exponential(0.121)),
     device::Symbol = :cpu
 )
