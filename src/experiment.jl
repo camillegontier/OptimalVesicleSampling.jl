@@ -13,7 +13,7 @@ end
 
 function Experiment(
     σ,
-    A1rng, τ1rng, A2rng, τ2rng,
+    A1rng, τ1rng, τ2rng,
     m_out, width,
     timestep::Timestep = RandomTimestep(Exponential(0.121)),
     device::Symbol = :cpu
@@ -22,7 +22,7 @@ function Experiment(
     filter = ParticleFilter(width)
     simmodel = ParticleState(
                 m_out,
-                A1rng, τ1rng, A2rng, τ2rng,
+                A1rng, τ1rng, τ2rng,
                 device = device
              )
     times = zeros(0)
