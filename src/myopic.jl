@@ -12,7 +12,7 @@ Myopic(dts) = Myopic(dts, _entropy)
 _temp_simmodel(sim, ::Myopic) = deepcopy(sim.simmodel)
 
 function (policy::MyopicPolicy)(sim::Simulation)
-    M = 100
+    M = 10
     dts = sim.tsteps.dts
     m_out = length(sim.simmodel.state.A1ind)
     idx = rand(1:m_out,M)
